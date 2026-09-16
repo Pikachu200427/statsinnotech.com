@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Portal - Stats Innotech</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ==========================================================================
+       STATS INNOTECH - ADMIN PORTAL MODERN DESIGN SYSTEM
+       ========================================================================== */
+    :root {
+      --admin-navy: #0B1F3A;
+      --admin-dark: #071527;
+      --admin-surface: #0E2444;
+      --admin-card-bg: #FFFFFF;
+      --admin-border: #E2E8F0;
+      --admin-text-main: #0F172A;
+      --admin-text-muted: #64748B;
+      --admin-blue: #155EEF;
+      --admin-cyan: #06B6D4;
+      --admin-green: #10B981;
+      --admin-amber: #F59E0B;
+      --admin-red: #EF4444;
+      --admin-radius: 14px;
+      --admin-shadow: 0 10px 30px rgba(11, 31, 58, 0.08);
+    }
+
+    body.admin-body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #F1F5F9;
+      color: var(--admin-text-main);
+      min-height: 100vh;
+    }
+
+    /* ----------------------------------------------------
+       ADMIN LOGIN SCREEN (MATCHES STUDENT LOGIN UI EXACTLY)
+       ---------------------------------------------------- */
+    #adminAuthScreen {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: linear-gradient(135deg, #ffffff, #eef2ff);
+    }
+
+    #adminAuthScreen .login-box {
+      width: 100%;
+      max-width: 430px;
+      background: white;
+      padding: 35px;
+      border-radius: 20px;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, .10);
+    }
+
+    #adminAuthScreen .logo {
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
+      background: #fff;
+    }
+
+    #adminAuthScreen .login-box h1 {
+      text-align: center;
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 24px;
+      font-weight: 700;
+      color: #111827;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    #adminAuthScreen .login-box p {
+      text-align: center;
+      color: #6b7280;
+      margin-top: 0;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    #adminAuthScreen .form-group {
+      margin-bottom: 16px;
+    }
+
+    #adminAuthScreen label {
+      display: block;
+      margin-bottom: 7px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #374151;
+    }
+
+    #adminAuthScreen input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 12px 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      outline: none;
+      background: white;
+      font-family: inherit;
+      font-size: 14px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    #adminAuthScreen input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+    }
+
+    #adminAuthScreen .btn {
+      border: none;
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-weight: 600;
+      font-size: 15px;
+      cursor: pointer;
+      display: inline-block;
+      text-align: center;
+      transition: background-color 0.2s, transform 0.15s;
+    }
+
+    #adminAuthScreen .btn-primary {
+      background: #4f46e5;
+      color: white;
+    }
+
+    #adminAuthScreen .btn-primary:hover {
+      background: #4338ca;
+    }
+
+    #adminAuthScreen .admin-quick-creds {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid #e5e7eb;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    #adminAuthScreen .admin-quick-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    #adminAuthScreen .admin-quick-pill {
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #374151;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    #adminAuthScreen .admin-quick-pill:hover {
+      background: #eef2ff;
+      border-color: #4f46e5;
+      color: #4f46e5;
+    }
+
+    #adminAuthScreen .login-links {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    #adminAuthScreen .login-link {
+      border: none;
+      background: none;
+      color: #4f46e5;
+      font-weight: 600;
+      font-size: 13.5px;
+      padding: 5px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    #adminAuthScreen .login-link:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 500px) {
+      #adminAuthScreen .login-box {
+        padding: 25px 20px;
+      }
+    }
+
+    /* ----------------------------------------------------
+       ADMIN APP LAYOUT (DASHBOARD)
+       ---------------------------------------------------- */
+    #adminAppLayout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: 270px;
+      background: var(--admin-navy);
+      color: #FFFFFF;
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .admin-sidebar-header {
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-sidebar-logo {
+      width: 155px;
+      height: auto;
+      display: block;
+    }
+
+    .admin-sidebar-menu {
+      padding: 20px 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .admin-menu-heading {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #94A3B8;
+      padding: 10px 12px 4px;
+      margin: 0;
+    }
+
+    .admin-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 11px 14px;
+      border-radius: 10px;
+      color: #CBD5E1;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      width: 100%;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .admin-nav-item:hover {
+      background: rgba(255, 255, 255, 0.07);
+      color: #FFFFFF;
+    }
+
+    .admin-nav-item.active {
+      background: var(--admin-blue);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(21, 94, 239, 0.4);
+    }
+
+    .admin-nav-item svg {
+      flex-shrink: 0;
+    }
+
+    .admin-nav-badge {
+      margin-left: auto;
+      font-size: 11px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+    }
+
+    .admin-sidebar-footer {
+      padding: 18px 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .admin-user-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .admin-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--admin-cyan), var(--admin-blue));
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .admin-user-info {
+      overflow: hidden;
+      flex: 1;
+    }
+
+    .admin-user-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+      margin: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    .admin-user-role {
+      font-size: 11px;
+      color: var(--admin-cyan);
+      margin: 0;
+    }
+
+    /* Main Area */
+    .admin-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .admin-topbar {
+      height: 70px;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--admin-border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .admin-topbar-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--admin-navy);
+      margin: 0;
+    }
+
+    .admin-topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-public-site {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #334155;
+      text-decoration: none;
+      background: #F1F5F9;
+      border: 1px solid #CBD5E1;
+      transition: all 0.2s;
+    }
+
+    .btn-public-site:hover {
+      background: #E2E8F0;
+      color: var(--admin-navy);
+    }
+
+    .btn-admin-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 16px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #FFFFFF;
+      background: var(--admin-blue);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(21, 94, 239, 0.25);
+    }
+
+    .btn-admin-action:hover {
+      background: #104ECC;
+      transform: translateY(-1px);
+    }
+
+    .admin-content-view {
+      padding: 32px;
+      flex: 1;
+    }
+
+    /* Stats Overview Cards */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+
+    .admin-stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--admin-radius);
+      padding: 22px 20px;
+      box-shadow: var(--admin-shadow);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .admin-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .stat-blue {
+      background: rgba(21, 94, 239, 0.1);
+      color: var(--admin-blue);
+    }
+
+    .stat-cyan {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--admin-cyan);
+    }
+
+    .stat-green {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--admin-green);
+    }
+
+    .stat-amber {
+      background: rgba(245, 158, 11, 0.1);
+      color: var(--admin-amber);
+    }
+
+    .admin-stat-number {
+      font-family: 'Outfit', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--admin-navy);
+      margin: 0;
+      line-height: 1.1;
+    }
+
+    .admin-stat-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--admin-text-muted);
+      margin: 4px 0 0;
+    }
+
+    /* Cards & Tables */
+    .admin-panel-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--admin-radius);
+      box-shadow: var(--admin-shadow);
+      padding: 24px 28px;
+      margin-bottom: 30px;
+    }
+
+    .admin-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .admin-panel-heading {
+      font-family: 'Outfit', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--admin-navy);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .admin-panel-filter {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .admin-search-input {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 1px solid #CBD5E1;
+      font-size: 13.5px;
+      width: 220px;
+      font-family: inherit;
+    }
+
+    .admin-select-filter {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #CBD5E1;
+      font-size: 13.5px;
+      font-family: inherit;
+      background: #FFFFFF;
+    }
+
+    /* Custom Admin Table */
+    .admin-table-wrap {
+      overflow-x: auto;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13.5px;
+    }
+
+    .admin-table th {
+      padding: 12px 16px;
+      font-weight: 700;
+      color: #475569;
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--admin-border);
+      text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 0.6px;
+    }
+
+    .admin-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #F1F5F9;
+      color: #1E293B;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background: #F8FAFC;
+    }
+
+    .badge-status {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .badge-active {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .badge-draft {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+
+    .badge-pending {
+      background: #EFF6FF;
+      color: #1E40AF;
+    }
+
+    .badge-shortlisted {
+      background: #E0E7FF;
+      color: #3730A3;
+    }
+
+    .badge-accepted {
+      background: #DCFCE7;
+      color: #166534;
+    }
+
+    .badge-rejected {
+      background: #FEE2E2;
+      color: #991B1B;
+    }
+
+    /* Action Buttons in Table */
+    .table-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .btn-tbl-action {
+      background: #F1F5F9;
+      border: 1px solid #E2E8F0;
+      color: #334155;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .btn-tbl-action:hover {
+      background: #E2E8F0;
+      color: var(--admin-navy);
+    }
+
+    .btn-tbl-action.delete:hover {
+      background: #FEE2E2;
+      color: #DC2626;
+      border-color: #FCA5A5;
+    }
+
+    /* Modal Overlay */
+    .admin-modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(11, 31, 58, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .admin-modal-overlay.open {
+      display: flex;
+    }
+
+    .admin-modal-box {
+      background: #FFFFFF;
+      border-radius: 18px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      width: 100%;
+      max-width: 600px;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: modalFadeIn 0.25s ease-out;
+    }
+
+    @keyframes modalFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95) translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .admin-modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-modal-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--admin-navy);
+      margin: 0;
+    }
+
+    .admin-modal-close {
+      background: transparent;
+      border: none;
+      font-size: 24px;
+      color: #64748B;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    .admin-modal-body {
+      padding: 24px;
+      overflow-y: auto;
+    }
+
+    .admin-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid #E2E8F0;
+      background: #F8FAFC;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .form-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .admin-form-group {
+      margin-bottom: 16px;
+    }
+
+    .admin-form-group label {
+      display: block;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .admin-form-group input,
+    .admin-form-group select,
+    .admin-form-group textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid #CBD5E1;
+      font-size: 13.5px;
+      font-family: inherit;
+    }
+
+    .admin-form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-secondary-cancel {
+      background: #FFFFFF;
+      border: 1px solid #CBD5E1;
+      color: #475569;
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 13.5px;
+      cursor: pointer;
+    }
+
+    .btn-primary-save {
+      background: var(--admin-blue);
+      border: none;
+      color: #FFFFFF;
+      padding: 9px 22px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13.5px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(21, 94, 239, 0.3);
+    }
+
+    @media (max-width: 1024px) {
+      .admin-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      #adminAppLayout {
+        flex-direction: column;
+      }
+
+      .admin-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .admin-stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-content-view {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body class="admin-body">
+
+  <!-- ======================================================================
+       1. ADMIN AUTHENTICATION SCREEN (MATCHES STUDENT LOGIN UI)
+       ====================================================================== -->
+  <div id="adminAuthScreen">
+    <div class="login-box">
+      <div class="logo" style="background:#fff;width:100%;height:auto;border-radius:0;margin:0 auto 20px;">
+        <a href="Index.html" title="Stats Innotech">
+          <img alt="Stats Innotech" src="assets/STATS monogram - colored(2).png"
+            style="width:100%;max-width:150px;height:150px;display:block;margin:auto;" />
+        </a>
+      </div>
+      <h1>Admin Portal</h1>
+      <p>Login to continue</p>
+
+      <div id="adminLoginError"
+        style="display:none; color:#dc2626; margin-bottom:15px; text-align:center; font-size:13.5px; background:#fee2e2; padding:10px 14px; border-radius:10px;">
+      </div>
+
+      <form id="adminLoginForm">
+        <div class="form-group">
+          <label>Admin ID or Email</label>
+          <input type="text" id="adminIdInput" placeholder="Enter your admin ID or email" required
+            autocomplete="username" />
+        </div>
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" id="adminPasswordInput" placeholder="Enter your password" required
+            autocomplete="current-password" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">
+          Login
+        </button>
+      </form>
+
+      <div class="admin-quick-creds">
+        <strong>Authorized Admin Accounts:</strong>
+        <div class="admin-quick-pills">
+          <button type="button" class="admin-quick-pill"
+            onclick="quickFill('SIT@ADMIN.SUJAL', '@Sujal.Stats2026')">Sujal (Lead)</button>
+          <button type="button" class="admin-quick-pill"
+            onclick="quickFill('SIT@ADMIN.AYUSHI', '@Ayushi.Stats2026')">Ayushi</button>
+          <button type="button" class="admin-quick-pill"
+            onclick="quickFill('SIT@ADMIN.TANUSHREE', '@Tanushree.Stats2026')">Tanushree</button>
+          <button type="button" class="admin-quick-pill"
+            onclick="quickFill('SIT@ADMIN.SARVESH', '@Sarvesh.Stats2026')">Sarvesh</button>
+          <button type="button" class="admin-quick-pill"
+            onclick="quickFill('SIT@ADMIN.SHUBHAM', '@Shubham.Stats2026')">Shubham</button>
+          <button type="button" class="admin-quick-pill" onclick="quickFill('admin@statsinnotech.com', 'admin123')">Dev
+            Demo</button>
+        </div>
+      </div>
+
+      <div class="login-links">
+        <a href="Index.html" class="login-link">&larr; Back to Website</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       2. ADMIN MAIN APPLICATION LAYOUT
+       ====================================================================== -->
+  <div id="adminAppLayout" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <a href="Index.html">
+          <img src="assets/header_logo.png" alt="Stats Innotech" class="admin-sidebar-logo" />
+        </a>
+      </div>
+
+      <nav class="admin-sidebar-menu">
+        <p class="admin-menu-heading">Main Navigation</p>
+        <button class="admin-nav-item active" onclick="showAdminTab('dashboard', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <rect height="9" width="7" x="3" y="3"></rect>
+            <rect height="5" width="7" x="14" y="3"></rect>
+            <rect height="9" width="7" x="14" y="12"></rect>
+            <rect height="5" width="7" x="3" y="16"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </button>
+        <button class="admin-nav-item" onclick="showAdminTab('courses', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+          </svg>
+          <span>Manage Courses</span>
+          <span class="admin-nav-badge" id="badgeCourseCount">9</span>
+        </button>
+        <button class="admin-nav-item" onclick="showAdminTab('internships', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <rect height="14" rx="2" ry="2" width="20" x="2" y="7"></rect>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+          </svg>
+          <span>Internship Tracks</span>
+          <span class="admin-nav-badge" id="badgeTrackCount">10</span>
+        </button>
+        <button class="admin-nav-item" onclick="showAdminTab('applications', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" x2="8" y1="13" y2="13"></line>
+            <line x1="16" x2="8" y1="17" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Applications &amp; Leads</span>
+          <span class="admin-nav-badge" id="badgeAppCount">14</span>
+        </button>
+
+        <p class="admin-menu-heading" style="margin-top: 14px;">Communication &amp; Settings</p>
+        <button class="admin-nav-item" onclick="showAdminTab('announcements', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+          <span>Announcements</span>
+        </button>
+        <button class="admin-nav-item" onclick="showAdminTab('settings', this)">
+          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+            stroke-width="2" viewBox="0 0 24 24" width="18">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          <span>System Settings</span>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div class="admin-user-card">
+          <div class="admin-avatar" id="adminAvatarInitials">AD</div>
+          <div class="admin-user-info">
+            <p class="admin-user-name" id="adminDisplayId">Admin User</p>
+            <p class="admin-user-role">Super Administrator</p>
+          </div>
+          <button onclick="adminLogout()" title="Logout"
+            style="background:transparent; border:none; color:#EF4444; cursor:pointer; padding:4px;">
+            <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" viewBox="0 0 24 24" width="18">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" x2="9" y1="12" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="admin-main">
+      <!-- Topbar -->
+      <header class="admin-topbar">
+        <h2 class="admin-topbar-title" id="adminPageHeaderTitle">Dashboard Overview</h2>
+        <div class="admin-topbar-actions">
+          <a href="Index.html" class="btn-public-site" target="_blank">
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+              stroke-width="2" viewBox="0 0 24 24" width="14">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" x2="21" y1="14" y2="3"></line>
+            </svg>
+            <span>View Public Site</span>
+          </a>
+          <button class="btn-admin-action" onclick="openAddCourseModal()">
+            <span>+ Add Course</span>
+          </button>
+          <button class="btn-admin-action" onclick="openAddTrackModal()"
+            style="background:var(--admin-cyan); color:var(--admin-navy);">
+            <span>+ Add Track</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: DASHBOARD OVERVIEW -->
+      <div class="admin-content-view" id="viewDashboard">
+        <div class="admin-stats-grid">
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon stat-blue">
+              <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="24">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="admin-stat-number" id="statTotalCourses">9</h3>
+              <p class="admin-stat-label">Active Courses</p>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon stat-cyan">
+              <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="24">
+                <rect height="14" rx="2" ry="2" width="20" x="2" y="7"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="admin-stat-number" id="statTotalTracks">10</h3>
+              <p class="admin-stat-label">Internship Tracks</p>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon stat-green">
+              <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="24">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="admin-stat-number" id="statTotalStudents">1,240+</h3>
+              <p class="admin-stat-label">Enrolled Learners</p>
+            </div>
+          </div>
+
+          <div class="admin-stat-card">
+            <div class="admin-stat-icon stat-amber">
+              <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="24">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h3 class="admin-stat-number" id="statPendingApps">14</h3>
+              <p class="admin-stat-label">Applications Pending</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="admin-panel-card">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-heading">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="20">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+              <span>Recent Applications &amp; Inquiries</span>
+            </h3>
+            <button class="btn-public-site" onclick="showAdminTab('applications')">View All Applications &rarr;</button>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="dashboardRecentTable">
+              <thead>
+                <tr>
+                  <th>Applicant Name</th>
+                  <th>Domain / Course</th>
+                  <th>Email</th>
+                  <th>College</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardRecentBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 2: COURSES MANAGEMENT -->
+      <div class="admin-content-view" id="viewCourses" style="display:none;">
+        <div class="admin-panel-card">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-heading">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="20">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+              </svg>
+              <span>Catalog Courses Directory</span>
+            </h3>
+            <div class="admin-panel-filter">
+              <input type="text" class="admin-search-input" id="searchCourseInput" placeholder="Search course name..."
+                oninput="filterCoursesTable()" />
+              <select class="admin-select-filter" id="filterCourseLevel" onchange="filterCoursesTable()">
+                <option value="ALL">All Levels</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+              </select>
+              <button class="btn-admin-action" onclick="openAddCourseModal()">+ Add Course</button>
+            </div>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="coursesAdminTable">
+              <thead>
+                <tr>
+                  <th>Course Title</th>
+                  <th>Sub-Specialization</th>
+                  <th>Duration</th>
+                  <th>Level</th>
+                  <th>Enrolled</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="coursesAdminBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: INTERNSHIP TRACKS MANAGEMENT -->
+      <div class="admin-content-view" id="viewInternships" style="display:none;">
+        <div class="admin-panel-card">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-heading">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="20">
+                <rect height="14" rx="2" ry="2" width="20" x="2" y="7"></rect>
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+              </svg>
+              <span>Internship Domain Tracks</span>
+            </h3>
+            <div class="admin-panel-filter">
+              <input type="text" class="admin-search-input" id="searchTrackInput" placeholder="Search track name..."
+                oninput="filterTracksTable()" />
+              <button class="btn-admin-action" onclick="openAddTrackModal()"
+                style="background:var(--admin-cyan); color:var(--admin-navy);">+ Add Track</button>
+            </div>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="tracksAdminTable">
+              <thead>
+                <tr>
+                  <th>Track Title</th>
+                  <th>Badge Category</th>
+                  <th>Key Skills / Tools</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="tracksAdminBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 4: APPLICATIONS & LEADS -->
+      <div class="admin-content-view" id="viewApplications" style="display:none;">
+        <div class="admin-panel-card">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-heading">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                stroke-width="2" viewBox="0 0 24 24" width="20">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" x2="8" y1="13" y2="13"></line>
+                <line x1="16" x2="8" y1="17" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+              <span>Student Inquiries &amp; Internship Applications</span>
+            </h3>
+            <div class="admin-panel-filter">
+              <select class="admin-select-filter" id="filterAppStatus" onchange="filterAppsTable()">
+                <option value="ALL">All Statuses</option>
+                <option value="Pending">Pending</option>
+                <option value="Shortlisted">Shortlisted</option>
+                <option value="Accepted">Accepted</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+              <button class="btn-public-site" onclick="exportApplicationsToCSV()">
+                <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                  stroke-width="2" viewBox="0 0 24 24" width="14">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" x2="12" y1="15" y2="3"></line>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+          <div class="admin-table-wrap">
+            <table class="admin-table" id="appsAdminTable">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Applicant Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Domain Track</th>
+                  <th>College &amp; Year</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="appsAdminBody">
+                <!-- Injected via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 5: ANNOUNCEMENTS -->
+      <div class="admin-content-view" id="viewAnnouncements" style="display:none;">
+        <div class="admin-panel-card">
+          <div class="admin-panel-header">
+            <h3 class="admin-panel-heading">Broadcast Student Announcement</h3>
+          </div>
+          <form id="announcementForm" onsubmit="handlePostAnnouncement(event)" style="max-width: 650px;">
+            <div class="admin-form-group">
+              <label for="announceTitle">Announcement Subject *</label>
+              <input type="text" id="announceTitle" placeholder="e.g. New Capstone Project Brief Released" required />
+            </div>
+            <div class="admin-form-group">
+              <label for="announceMessage">Message Content *</label>
+              <textarea id="announceMessage" placeholder="Type instructions or updates for students..." rows="4"
+                required></textarea>
+            </div>
+            <button type="submit" class="btn-admin-action">Post Announcement</button>
+          </form>
+        </div>
+
+        <div class="admin-panel-card">
+          <h3 class="admin-panel-heading" style="margin-bottom: 16px;">Active Announcements</h3>
+          <div id="announcementsList" style="display: flex; flex-direction: column; gap: 12px;">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 6: SETTINGS -->
+      <div class="admin-content-view" id="viewSettings" style="display:none;">
+        <div class="admin-panel-card" style="max-width: 700px;">
+          <h3 class="admin-panel-heading" style="margin-bottom: 14px;">Portal Configuration</h3>
+          <p style="font-size: 13.5px; color: var(--admin-text-muted); margin-bottom: 24px;">
+            Manage localized browser storage and cloud integration settings for Stats Innotech.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 14px;">
+            <div
+              style="display:flex; align-items:center; justify-content:space-between; padding:14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+              <div>
+                <strong>Restore Demo Data</strong>
+                <p style="margin:4px 0 0; font-size:12.5px; color:#64748B;">Reset courses and internship tracks back to
+                  the official default catalog.</p>
+              </div>
+              <button class="btn-public-site" onclick="resetToDemoData()">Reset Data</button>
+            </div>
+
+            <div
+              style="display:flex; align-items:center; justify-content:space-between; padding:14px; background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px;">
+              <div>
+                <strong>Google Apps Script Backend Link</strong>
+                <p style="margin:4px 0 0; font-size:12.5px; color:#64748B;">Code.gs Spreadsheet ID:
+                  <code>1dERGNqcGt6ag7VYHWEPNMiK2H7LbaCeMWMhhFX2tIi4</code>
+                </p>
+              </div>
+              <span class="badge-status badge-active">Ready</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ======================================================================
+       MODALS: ADD / EDIT COURSE
+       ====================================================================== -->
+  <div class="admin-modal-overlay" id="courseModalOverlay">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="courseModalHeading">Add New Course</h3>
+        <button class="admin-modal-close" onclick="closeCourseModal()">&times;</button>
+      </div>
+      <form id="courseForm" onsubmit="handleSaveCourse(event)">
+        <input type="hidden" id="courseEditId" value="" />
+        <div class="admin-modal-body">
+          <div class="form-grid-2">
+            <div class="admin-form-group">
+              <label for="inputCourseName">Course Title *</label>
+              <input type="text" id="inputCourseName" placeholder="e.g. Java Full Stack" required />
+            </div>
+            <div class="admin-form-group">
+              <label for="inputCourseSubname">Sub-Specialization *</label>
+              <input type="text" id="inputCourseSubname" placeholder="e.g. Enterprise Systems" required />
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="admin-form-group">
+              <label for="inputCourseDuration">Duration *</label>
+              <input type="text" id="inputCourseDuration" placeholder="e.g. 3 Months" required />
+            </div>
+            <div class="admin-form-group">
+              <label for="inputCourseLevel">Level *</label>
+              <select id="inputCourseLevel" required>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Advanced">Advanced</option>
+                <option value="All Levels">All Levels</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="admin-form-group">
+              <label for="inputCourseStudents">Estimated Students</label>
+              <input type="text" id="inputCourseStudents" placeholder="e.g. 1.2k+ Students" />
+            </div>
+            <div class="admin-form-group">
+              <label for="inputCourseStatus">Status</label>
+              <select id="inputCourseStatus">
+                <option value="Active">Active</option>
+                <option value="Draft">Draft</option>
+              </select>
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label for="inputCourseDesc">Description</label>
+            <textarea id="inputCourseDesc" placeholder="Brief summary of what students will master..."
+              rows="3"></textarea>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn-secondary-cancel" onclick="closeCourseModal()">Cancel</button>
+          <button type="submit" class="btn-primary-save">Save Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       MODALS: ADD / EDIT INTERNSHIP TRACK
+       ====================================================================== -->
+  <div class="admin-modal-overlay" id="trackModalOverlay">
+    <div class="admin-modal-box">
+      <div class="admin-modal-header">
+        <h3 class="admin-modal-title" id="trackModalHeading">Add Internship Track</h3>
+        <button class="admin-modal-close" onclick="closeTrackModal()">&times;</button>
+      </div>
+      <form id="trackForm" onsubmit="handleSaveTrack(event)">
+        <input type="hidden" id="trackEditId" value="" />
+        <div class="admin-modal-body">
+          <div class="form-grid-2">
+            <div class="admin-form-group">
+              <label for="inputTrackTitle">Track Title *</label>
+              <input type="text" id="inputTrackTitle" placeholder="e.g. Linux & Systems Admin" required />
+            </div>
+            <div class="admin-form-group">
+              <label for="inputTrackBadge">Badge Category *</label>
+              <input type="text" id="inputTrackBadge" placeholder="e.g. DEVOPS / SYS" required />
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label for="inputTrackSkills">Core Skills (comma separated) *</label>
+            <input type="text" id="inputTrackSkills" placeholder="e.g. Linux CLI, Bash, SSH, Systemd" required />
+          </div>
+          <div class="admin-form-group">
+            <label for="inputTrackDesc">Track Overview *</label>
+            <textarea id="inputTrackDesc" placeholder="Describe the hands-on project deliverables..." rows="3"
+              required></textarea>
+          </div>
+          <div class="admin-form-group">
+            <label for="inputTrackStatus">Status</label>
+            <select id="inputTrackStatus">
+              <option value="Active">Active</option>
+              <option value="Archived">Archived</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-modal-footer">
+          <button type="button" class="btn-secondary-cancel" onclick="closeTrackModal()">Cancel</button>
+          <button type="submit" class="btn-primary-save">Save Track</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       ADMIN JAVASCRIPT ENGINE
+       ====================================================================== -->
+  <script>
+    // ----------------------------------------------------
+    // DATA SEEDS
+    // ----------------------------------------------------
+    const DEFAULT_COURSES = [
+      { id: 'c1', name: 'Java', subname: 'Core Programming', duration: '3 Months', level: 'Beginner', students: '1.2k+ Students', status: 'Active', desc: 'Master OOP, collections, exception handling, and real-world project building.' },
+      { id: 'c2', name: 'Python', subname: 'Programming Language', duration: '2 Months', level: 'Beginner', students: '980+ Students', status: 'Active', desc: 'From syntax to scripting — learn Python for automation, data analysis, and backend development.' },
+      { id: 'c3', name: 'C & C++', subname: 'Systems Programming', duration: '3 Months', level: 'Intermediate', students: '750+ Students', status: 'Active', desc: 'Deep-dive into low-level programming, memory management, pointers, and performance-critical coding.' },
+      { id: 'c4', name: 'Web Development', subname: 'Full Stack', duration: '4 Months', level: 'Beginner', students: '1.8k+ Students', status: 'Active', desc: 'HTML5, CSS3, JavaScript, React, Node.js and RESTful API backend development.' },
+      { id: 'c5', name: 'Data Analytics', subname: 'Business Intelligence', duration: '4 Months', level: 'Beginner', students: '1.5k+ Students', status: 'Active', desc: 'Turn raw data into insights using Excel, SQL, Power BI and statistical analysis.' },
+      { id: 'c6', name: 'DSA with Java', subname: 'Algorithms & Structures', duration: '4 Months', level: 'Intermediate', students: '890+ Students', status: 'Active', desc: 'Arrays, linked lists, trees, graphs, dynamic programming for interview readiness.' },
+      { id: 'c7', name: 'DSA with Python', subname: 'Algorithms & Structures', duration: '4 Months', level: 'Intermediate', students: '720+ Students', status: 'Active', desc: 'Master data structures and algorithms using Python for competitive programming.' },
+      { id: 'c8', name: 'Linux', subname: 'System Administration', duration: '2 Months', level: 'Beginner', students: '600+ Students', status: 'Active', desc: 'Terminal navigation, process control, systemd services, and automation in Linux environments.' },
+      { id: 'c9', name: 'Cloud Computing', subname: 'AWS & DevOps', duration: '5 Months', level: 'Advanced', students: '540+ Students', status: 'Active', desc: 'Deploy, scale, and manage cloud infrastructure on AWS — EC2, S3, IAM, and CI/CD pipelines.' }
+    ];
+
+    const DEFAULT_TRACKS = [
+      { id: 't1', title: 'Data Analytics & BI', badge: 'HOT TRACK', skills: ['Power BI', 'Python Pandas', 'SQL Analysis', 'Tableau'], status: 'Active', desc: 'Clean, transform, and analyze enterprise datasets. Build interactive KPI dashboards.' },
+      { id: 't2', title: 'Full Stack Web Dev', badge: 'POPULAR', skills: ['React.js', 'Node / Express', 'REST APIs', 'PostgreSQL'], status: 'Active', desc: 'Design and deploy high-performance web applications using modern React frameworks.' },
+      { id: 't3', title: 'Software Testing & QA', badge: 'IN DEMAND', skills: ['Selenium', 'Manual QA', 'Postman API', 'JIRA'], status: 'Active', desc: 'Perform manual test design, automated Selenium scripts, API testing with Postman.' },
+      { id: 't4', title: 'Java Software Systems', badge: 'ENTERPRISE', skills: ['Spring Boot', 'Core Java', 'Hibernate', 'Maven'], status: 'Active', desc: 'Build robust backend services, controllers, database persistence, and clean architectures.' },
+      { id: 't5', title: 'Python & Machine Learning', badge: 'AI/DATA', skills: ['Python 3', 'Scikit-Learn', 'NumPy/Pandas', 'FastAPI'], status: 'Active', desc: 'Develop data pipelines, feature engineering workflows, and machine learning models.' },
+      { id: 't6', title: 'Cloud Solutions & DevOps', badge: 'INFRASTRUCTURE', skills: ['AWS EC2 / S3', 'Docker', 'IAM Security', 'CI/CD'], status: 'Active', desc: 'Deploy cloud compute resources, configure VPC subnets, automate backups and pipelines.' },
+      { id: 't7', title: 'Database Administration', badge: 'CORE BACKEND', skills: ['PostgreSQL', 'SQL Tuning', 'ER Diagrams', 'Replication'], status: 'Active', desc: 'Design normalized schemas, optimize indexing strategies, and manage stored procedures.' },
+      { id: 't8', title: 'IoT & Embedded Systems', badge: 'HARDWARE', skills: ['ESP32', 'MQTT Broker', 'Telemetry', 'Arduino C++'], status: 'Active', desc: 'Connect sensors to microcontrollers, stream telemetry over MQTT, and create dashboards.' },
+      { id: 't9', title: 'Civil Engineering & CAD', badge: 'ENGINEERING', skills: ['AutoCAD', 'Structural Plans', 'BIM Basics', 'Cost Estimates'], status: 'Active', desc: 'Work on real structural drafting, 2D/3D building plans, and quantity takeoffs.' },
+      { id: 't10', title: 'Linux & Systems Admin', badge: 'DEVOPS / SYS', skills: ['Linux CLI', 'Bash Scripting', 'SSH & Security', 'Systemd / Cron'], status: 'Active', desc: 'Master Linux CLI commands, user permission security, Bash shell scripting, and network configuration.' }
+    ];
+
+    const DEFAULT_APPLICATIONS = [
+      { id: 'a1', date: '2026-09-15', name: 'Rahul Sharma', email: 'rahul.s@gmail.com', phone: '+91 98765 43210', domain: 'Full Stack Web Dev', college: 'VIT Pune (3rd Year)', status: 'Pending' },
+      { id: 'a2', date: '2026-09-15', name: 'Pooja Verma', email: 'pooja.v@outlook.com', phone: '+91 98112 34567', domain: 'Data Analytics & BI', college: 'COEP Tech (4th Year)', status: 'Shortlisted' },
+      { id: 'a3', date: '2026-09-14', name: 'Amit Kulkarni', email: 'amit.k@gmail.com', phone: '+91 97654 32109', domain: 'Linux & Systems Admin', college: 'MIT World Peace Univ', status: 'Accepted' },
+      { id: 'a4', date: '2026-09-14', name: 'Neha Joshi', email: 'neha.j@yahoo.com', phone: '+91 98901 23456', domain: 'Java Software Systems', college: 'DY Patil COE', status: 'Pending' },
+      { id: 'a5', date: '2026-09-13', name: 'Rohan Deshmukh', email: 'rohan.d@gmail.com', phone: '+91 99223 44556', domain: 'Cloud Solutions & DevOps', college: 'Cummins COE', status: 'Shortlisted' }
+    ];
+
+    const DEFAULT_ANNOUNCEMENTS = [
+      { id: 'ann1', title: 'Q3 Internship Cohort Orientation', date: 'Sep 15, 2026', author: 'Admin Sujal', message: 'Orientation call for all admitted internship candidates will be conducted this Friday at 5:00 PM IST via Google Meet.' },
+      { id: 'ann2', title: 'New Linux Administration Track Live', date: 'Sep 16, 2026', author: 'Admin Team', message: 'We have officially launched the Linux & Systems Administration track with dedicated hands-on server labs!' }
+    ];
+
+    // Initialize LocalStorage Data
+    function getStoredData(key, fallback) {
+      const stored = localStorage.getItem('sit_admin_' + key);
+      if (stored) {
+        try { return JSON.parse(stored); } catch (e) { }
+      }
+      localStorage.setItem('sit_admin_' + key, JSON.stringify(fallback));
+      return fallback;
+    }
+
+    function setStoredData(key, value) {
+      localStorage.setItem('sit_admin_' + key, JSON.stringify(value));
+    }
+
+    let courses = getStoredData('courses', DEFAULT_COURSES);
+    let tracks = getStoredData('tracks', DEFAULT_TRACKS);
+    let applications = getStoredData('applications', DEFAULT_APPLICATIONS);
+    let announcements = getStoredData('announcements', DEFAULT_ANNOUNCEMENTS);
+
+    // ----------------------------------------------------
+    // AUTHENTICATION & LOGIN
+    // ----------------------------------------------------
+    const VALID_ADMINS = {
+      "SIT@ADMIN.SUJAL": "@Sujal.Stats2026",
+      "SIT@ADMIN.AYUSHI": "@Ayushi.Stats2026",
+      "SIT@ADMIN.TANUSHREE": "@Tanushree.Stats2026",
+      "SIT@ADMIN.SARVESH": "@Sarvesh.Stats2026",
+      "SIT@ADMIN.SHUBHAM": "@Shubham.Stats2026",
+      "ADMIN@STATSINNOTECH.COM": "ADMIN123",
+      "ADMIN@STATSNOTECH.COM": "ADMIN123"
+    };
+
+    function quickFill(id, pw) {
+      document.getElementById('adminIdInput').value = id;
+      document.getElementById('adminPasswordInput').value = pw;
+    }
+
+    document.getElementById('adminLoginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const id = document.getElementById('adminIdInput').value.trim().toUpperCase();
+      const pw = document.getElementById('adminPasswordInput').value.trim();
+      const errBox = document.getElementById('adminLoginError');
+
+      if (VALID_ADMINS[id] && (VALID_ADMINS[id] === pw || VALID_ADMINS[id].toUpperCase() === pw.toUpperCase())) {
+        errBox.style.display = 'none';
+        const displayName = id.replace("SIT@ADMIN.", "").replace("@STATSINNOTECH.COM", "").replace("@STATSNOTECH.COM", "");
+        sessionStorage.setItem('sit_current_admin', displayName);
+        enterDashboard(displayName);
+      } else {
+        errBox.textContent = 'Invalid Admin credentials. Please check your Admin ID and password.';
+        errBox.style.display = 'block';
+      }
+    });
+
+    function enterDashboard(name) {
+      document.getElementById('adminAuthScreen').style.display = 'none';
+      document.getElementById('adminAppLayout').style.display = 'flex';
+      document.getElementById('adminDisplayId').textContent = name || 'Admin';
+      document.getElementById('adminAvatarInitials').textContent = (name || 'AD').slice(0, 2).toUpperCase();
+      renderAllViews();
+    }
+
+    function adminLogout() {
+      sessionStorage.removeItem('sit_current_admin');
+      document.getElementById('adminAppLayout').style.display = 'none';
+      document.getElementById('adminAuthScreen').style.display = 'flex';
+      document.getElementById('adminPasswordInput').value = '';
+    }
+
+    // Auto login if already logged in this session
+    window.addEventListener('DOMContentLoaded', function () {
+      const active = sessionStorage.getItem('sit_current_admin');
+      if (active) {
+        enterDashboard(active);
+      }
+    });
+
+    // ----------------------------------------------------
+    // VIEW SWITCHING
+    // ----------------------------------------------------
+    function showAdminTab(tabName, btnElem) {
+      const views = ['dashboard', 'courses', 'internships', 'applications', 'announcements', 'settings'];
+      views.forEach(v => {
+        const el = document.getElementById('view' + v.charAt(0).toUpperCase() + v.slice(1));
+        if (el) el.style.display = (v === tabName) ? 'block' : 'none';
+      });
+
+      const titleMap = {
+        dashboard: 'Dashboard Overview',
+        courses: 'Courses Directory & Curriculum',
+        internships: 'Internship Tracks Management',
+        applications: 'Student Applications & Leads',
+        announcements: 'Announcements & Broadcasts',
+        settings: 'System Configuration'
+      };
+      document.getElementById('adminPageHeaderTitle').textContent = titleMap[tabName] || 'Admin Console';
+
+      document.querySelectorAll('.admin-nav-item').forEach(b => b.classList.remove('active'));
+      if (btnElem) btnElem.classList.add('active');
+    }
+
+    // ----------------------------------------------------
+    // RENDER FUNCTIONS
+    // ----------------------------------------------------
+    function renderAllViews() {
+      renderDashboardRecent();
+      renderCoursesTable(courses);
+      renderTracksTable(tracks);
+      renderAppsTable(applications);
+      renderAnnouncements();
+      updateBadgeCounts();
+    }
+
+    function updateBadgeCounts() {
+      document.getElementById('statTotalCourses').textContent = courses.length;
+      document.getElementById('statTotalTracks').textContent = tracks.length;
+      document.getElementById('badgeCourseCount').textContent = courses.length;
+      document.getElementById('badgeTrackCount').textContent = tracks.length;
+      document.getElementById('badgeAppCount').textContent = applications.length;
+      document.getElementById('statPendingApps').textContent = applications.filter(a => a.status === 'Pending').length;
+    }
+
+    // 1. Dashboard Recent Table
+    function renderDashboardRecent() {
+      const tbody = document.getElementById('dashboardRecentBody');
+      tbody.innerHTML = '';
+      applications.slice(0, 5).forEach(app => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${app.name}</strong></td>
+          <td><span style="color:var(--admin-blue); font-weight:600;">${app.domain}</span></td>
+          <td>${app.email}</td>
+          <td>${app.college}</td>
+          <td><span class="badge-status badge-${app.status.toLowerCase()}">${app.status}</span></td>
+          <td>
+            <button class="btn-tbl-action" onclick="showAdminTab('applications')">Review</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // 2. Courses Table
+    function renderCoursesTable(data) {
+      const tbody = document.getElementById('coursesAdminBody');
+      tbody.innerHTML = '';
+      data.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><strong>${c.name}</strong></td>
+          <td>${c.subname}</td>
+          <td>${c.duration}</td>
+          <td><span class="badge-status" style="background:#E2E8F0; color:#334155;">${c.level}</span></td>
+          <td>${c.students || 'Active'}</td>
+          <td><span class="badge-status badge-${c.status === 'Active' ? 'active' : 'draft'}">${c.status}</span></td>
+          <td>
+            <div class="table-actions">
+              <button class="btn-tbl-action" onclick="editCourse('${c.id}')">Edit</button>
+              <button class="btn-tbl-action delete" onclick="deleteCourse('${c.id}')">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterCoursesTable() {
+      const query = document.getElementById('searchCourseInput').value.toLowerCase();
+      const level = document.getElementById('filterCourseLevel').value;
+      const filtered = courses.filter(c => {
+        const matchQ = c.name.toLowerCase().includes(query) || c.subname.toLowerCase().includes(query);
+        const matchL = (level === 'ALL' || c.level === level);
+        return matchQ && matchL;
+      });
+      renderCoursesTable(filtered);
+    }
+
+    // 3. Internship Tracks Table
+    function renderTracksTable(data) {
+      const tbody = document.getElementById('tracksAdminBody');
+      tbody.innerHTML = '';
+      data.forEach(t => {
+        const tr = document.createElement('tr');
+        const skillBadges = t.skills.map(s => `<span style="background:#F1F5F9; border:1px solid #CBD5E1; font-size:11px; padding:2px 6px; border-radius:4px; margin-right:4px;">${s}</span>`).join('');
+        tr.innerHTML = `
+          <td><strong>${t.title}</strong></td>
+          <td><span class="badge-status" style="background:rgba(6,182,212,0.15); color:#0891B2;">${t.badge}</span></td>
+          <td>${skillBadges}</td>
+          <td><span class="badge-status badge-${t.status === 'Active' ? 'active' : 'draft'}">${t.status}</span></td>
+          <td>
+            <div class="table-actions">
+              <button class="btn-tbl-action" onclick="editTrack('${t.id}')">Edit</button>
+              <button class="btn-tbl-action delete" onclick="deleteTrack('${t.id}')">Delete</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterTracksTable() {
+      const query = document.getElementById('searchTrackInput').value.toLowerCase();
+      const filtered = tracks.filter(t => t.title.toLowerCase().includes(query) || t.badge.toLowerCase().includes(query));
+      renderTracksTable(filtered);
+    }
+
+    // 4. Applications Table
+    function renderAppsTable(data) {
+      const tbody = document.getElementById('appsAdminBody');
+      tbody.innerHTML = '';
+      data.forEach(a => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${a.date}</td>
+          <td><strong>${a.name}</strong></td>
+          <td><a href="mailto:${a.email}" style="color:var(--admin-blue);">${a.email}</a></td>
+          <td>${a.phone}</td>
+          <td><span style="color:#0891B2; font-weight:700;">${a.domain}</span></td>
+          <td>${a.college}</td>
+          <td>
+            <select class="admin-select-filter" style="padding:4px 8px; font-size:12px;" onchange="updateAppStatus('${a.id}', this.value)">
+              <option value="Pending" ${a.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="Shortlisted" ${a.status === 'Shortlisted' ? 'selected' : ''}>Shortlisted</option>
+              <option value="Accepted" ${a.status === 'Accepted' ? 'selected' : ''}>Accepted</option>
+              <option value="Rejected" ${a.status === 'Rejected' ? 'selected' : ''}>Rejected</option>
+            </select>
+          </td>
+          <td>
+            <button class="btn-tbl-action delete" onclick="deleteApp('${a.id}')">Remove</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterAppsTable() {
+      const status = document.getElementById('filterAppStatus').value;
+      const filtered = (status === 'ALL') ? applications : applications.filter(a => a.status === status);
+      renderAppsTable(filtered);
+    }
+
+    function updateAppStatus(id, newStatus) {
+      const item = applications.find(a => a.id === id);
+      if (item) {
+        item.status = newStatus;
+        setStoredData('applications', applications);
+        updateBadgeCounts();
+      }
+    }
+
+    function deleteApp(id) {
+      if (confirm('Are you sure you want to remove this application?')) {
+        applications = applications.filter(a => a.id !== id);
+        setStoredData('applications', applications);
+        renderAppsTable(applications);
+        renderDashboardRecent();
+        updateBadgeCounts();
+      }
+    }
+
+    function exportApplicationsToCSV() {
+      const headers = ["ID", "Date", "Name", "Email", "Phone", "Domain", "College", "Status"];
+      const rows = applications.map(a => [a.id, a.date, `"${a.name}"`, a.email, `"${a.phone}"`, `"${a.domain}"`, `"${a.college}"`, a.status]);
+      const csvContent = "data:text/csv;charset=utf-8," + [headers.join(","), ...rows.map(e => e.join(","))].join("\n");
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute("download", `StatsInnotech_Applications_${new Date().toISOString().slice(0, 10)}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // 5. Announcements View
+    function renderAnnouncements() {
+      const container = document.getElementById('announcementsList');
+      container.innerHTML = '';
+      announcements.forEach(ann => {
+        const div = document.createElement('div');
+        div.style = "background:#F8FAFC; border:1px solid #E2E8F0; border-radius:10px; padding:16px 20px; position:relative;";
+        div.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:6px;">
+            <h4 style="margin:0; font-size:15px; color:var(--admin-navy);">${ann.title}</h4>
+            <span style="font-size:12px; color:#64748B;">${ann.date} • ${ann.author}</span>
+          </div>
+          <p style="margin:0; font-size:13.5px; color:#334155; line-height:1.5;">${ann.message}</p>
+          <button onclick="deleteAnnouncement('${ann.id}')" style="background:transparent; border:none; color:#EF4444; font-size:11.5px; font-weight:600; cursor:pointer; padding:0; margin-top:10px;">&times; Delete Notice</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function handlePostAnnouncement(e) {
+      e.preventDefault();
+      const title = document.getElementById('announceTitle').value;
+      const message = document.getElementById('announceMessage').value;
+      const author = 'Admin ' + (sessionStorage.getItem('sit_current_admin') || 'Team');
+      const newAnn = {
+        id: 'ann_' + Date.now(),
+        title: title,
+        message: message,
+        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+        author: author
+      };
+      announcements.unshift(newAnn);
+      setStoredData('announcements', announcements);
+      document.getElementById('announcementForm').reset();
+      renderAnnouncements();
+      alert('Announcement successfully published!');
+    }
+
+    function deleteAnnouncement(id) {
+      if (confirm('Delete this announcement?')) {
+        announcements = announcements.filter(a => a.id !== id);
+        setStoredData('announcements', announcements);
+        renderAnnouncements();
+      }
+    }
+
+    // ----------------------------------------------------
+    // COURSE CRUD OPERATIONS
+    // ----------------------------------------------------
+    function openAddCourseModal() {
+      document.getElementById('courseForm').reset();
+      document.getElementById('courseEditId').value = '';
+      document.getElementById('courseModalHeading').textContent = 'Add New Course';
+      document.getElementById('courseModalOverlay').classList.add('open');
+    }
+
+    function editCourse(id) {
+      const c = courses.find(item => item.id === id);
+      if (!c) return;
+      document.getElementById('courseEditId').value = c.id;
+      document.getElementById('inputCourseName').value = c.name;
+      document.getElementById('inputCourseSubname').value = c.subname;
+      document.getElementById('inputCourseDuration').value = c.duration;
+      document.getElementById('inputCourseLevel').value = c.level;
+      document.getElementById('inputCourseStudents').value = c.students || '';
+      document.getElementById('inputCourseStatus').value = c.status || 'Active';
+      document.getElementById('inputCourseDesc').value = c.desc || '';
+      document.getElementById('courseModalHeading').textContent = 'Edit Course: ' + c.name;
+      document.getElementById('courseModalOverlay').classList.add('open');
+    }
+
+    function closeCourseModal() {
+      document.getElementById('courseModalOverlay').classList.remove('open');
+    }
+
+    function handleSaveCourse(e) {
+      e.preventDefault();
+      const editId = document.getElementById('courseEditId').value;
+      const courseData = {
+        name: document.getElementById('inputCourseName').value.trim(),
+        subname: document.getElementById('inputCourseSubname').value.trim(),
+        duration: document.getElementById('inputCourseDuration').value.trim(),
+        level: document.getElementById('inputCourseLevel').value,
+        students: document.getElementById('inputCourseStudents').value.trim() || 'Active Batch',
+        status: document.getElementById('inputCourseStatus').value,
+        desc: document.getElementById('inputCourseDesc').value.trim()
+      };
+
+      if (editId) {
+        // Update existing
+        const idx = courses.findIndex(c => c.id === editId);
+        if (idx !== -1) {
+          courses[idx] = { ...courses[idx], ...courseData };
+        }
+      } else {
+        // Create new
+        const newId = 'c_' + Date.now();
+        courses.push({ id: newId, ...courseData });
+      }
+
+      setStoredData('courses', courses);
+      closeCourseModal();
+      renderCoursesTable(courses);
+      updateBadgeCounts();
+    }
+
+    function deleteCourse(id) {
+      if (confirm('Are you sure you want to delete this course from catalog?')) {
+        courses = courses.filter(c => c.id !== id);
+        setStoredData('courses', courses);
+        renderCoursesTable(courses);
+        updateBadgeCounts();
+      }
+    }
+
+    // ----------------------------------------------------
+    // TRACK CRUD OPERATIONS
+    // ----------------------------------------------------
+    function openAddTrackModal() {
+      document.getElementById('trackForm').reset();
+      document.getElementById('trackEditId').value = '';
+      document.getElementById('trackModalHeading').textContent = 'Add Internship Track';
+      document.getElementById('trackModalOverlay').classList.add('open');
+    }
+
+    function editTrack(id) {
+      const t = tracks.find(item => item.id === id);
+      if (!t) return;
+      document.getElementById('trackEditId').value = t.id;
+      document.getElementById('inputTrackTitle').value = t.title;
+      document.getElementById('inputTrackBadge').value = t.badge;
+      document.getElementById('inputTrackSkills').value = t.skills.join(', ');
+      document.getElementById('inputTrackDesc').value = t.desc;
+      document.getElementById('inputTrackStatus').value = t.status || 'Active';
+      document.getElementById('trackModalHeading').textContent = 'Edit Track: ' + t.title;
+      document.getElementById('trackModalOverlay').classList.add('open');
+    }
+
+    function closeTrackModal() {
+      document.getElementById('trackModalOverlay').classList.remove('open');
+    }
+
+    function handleSaveTrack(e) {
+      e.preventDefault();
+      const editId = document.getElementById('trackEditId').value;
+      const rawSkills = document.getElementById('inputTrackSkills').value.split(',').map(s => s.trim()).filter(Boolean);
+      const trackData = {
+        title: document.getElementById('inputTrackTitle').value.trim(),
+        badge: document.getElementById('inputTrackBadge').value.trim().toUpperCase(),
+        skills: rawSkills,
+        desc: document.getElementById('inputTrackDesc').value.trim(),
+        status: document.getElementById('inputTrackStatus').value
+      };
+
+      if (editId) {
+        const idx = tracks.findIndex(t => t.id === editId);
+        if (idx !== -1) {
+          tracks[idx] = { ...tracks[idx], ...trackData };
+        }
+      } else {
+        const newId = 't_' + Date.now();
+        tracks.push({ id: newId, ...trackData });
+      }
+
+      setStoredData('tracks', tracks);
+      closeTrackModal();
+      renderTracksTable(tracks);
+      updateBadgeCounts();
+    }
+
+    function deleteTrack(id) {
+      if (confirm('Are you sure you want to remove this internship track?')) {
+        tracks = tracks.filter(t => t.id !== id);
+        setStoredData('tracks', tracks);
+        renderTracksTable(tracks);
+        updateBadgeCounts();
+      }
+    }
+
+    function resetToDemoData() {
+      if (confirm('Reset all catalog and tracks to initial default data?')) {
+        localStorage.removeItem('sit_admin_courses');
+        localStorage.removeItem('sit_admin_tracks');
+        courses = DEFAULT_COURSES;
+        tracks = DEFAULT_TRACKS;
+        setStoredData('courses', courses);
+        setStoredData('tracks', tracks);
+        renderAllViews();
+        alert('Data reset to default.');
+      }
+    }
+  </script>
+</body>
+
+</html>
