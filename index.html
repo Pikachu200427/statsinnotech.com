@@ -156,8 +156,8 @@
 
     .brand-logo-image {
       display: block;
-      width: 220px;
-      height: auto;
+      width: 150px;
+      height: 150px;
       max-height: 52px;
       object-fit: contain;
       object-position: left center;
@@ -2681,15 +2681,6 @@
                 style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-top: 6px; text-transform: uppercase;">
                 Remote Accessible</div>
             </div>
-            <div style="width: 1px; background: rgba(255,255,255,0.15);"></div>
-            <div style="text-align: center; color: #CBD5E1;">
-              <div
-                style="font-family: var(--font-main); font-size: 32px; font-weight: 800; color: #3B82F6; line-height: 1;">
-                24+</div>
-              <div
-                style="font-size: 12px; font-weight: 600; letter-spacing: 0.5px; margin-top: 6px; text-transform: uppercase;">
-                Industry Tracks</div>
-            </div>
           </div>
         </div>
       </section>
@@ -2699,30 +2690,29 @@
            ====================================================================== -->
       <div class="section-divider-strip" aria-hidden="true">
         <div class="strip-track">
-          <span class="strip-item"><span class="strip-dot"></span>Java Full Stack</span>
-          <span class="strip-item"><span class="strip-dot"></span>Python Development</span>
+          <span class="strip-item"><span class="strip-dot"></span>Java</span>
+          <span class="strip-item"><span class="strip-dot"></span>Python</span>
           <span class="strip-item"><span class="strip-dot"></span>Cloud Computing (AWS)</span>
           <span class="strip-item"><span class="strip-dot"></span>Data Analytics &amp; BI</span>
           <span class="strip-item"><span class="strip-dot"></span>Artificial Intelligence &amp; ML</span>
-          <span class="strip-item"><span class="strip-dot"></span>Modern Web Development</span>
           <span class="strip-item"><span class="strip-dot"></span>Linux Administration</span>
           <span class="strip-item"><span class="strip-dot"></span>Civil CAD &amp; Design</span>
           <span class="strip-item"><span class="strip-dot"></span>Digital Marketing &amp; SEO</span>
           <span class="strip-item"><span class="strip-dot"></span>IoT &amp; Embedded Systems</span>
           <span class="strip-item"><span class="strip-dot"></span>DBMS &amp; SQL Mastery</span>
+          <span class="strip-item"><span class="strip-dot"></span>Software Testing</span>
           <!-- Duplicate for infinite seamless loop -->
           <span class="strip-item"><span class="strip-dot"></span>Java Full Stack</span>
           <span class="strip-item"><span class="strip-dot"></span>Python Development</span>
           <span class="strip-item"><span class="strip-dot"></span>Cloud Computing (AWS)</span>
           <span class="strip-item"><span class="strip-dot"></span>Data Analytics &amp; BI</span>
           <span class="strip-item"><span class="strip-dot"></span>Artificial Intelligence &amp; ML</span>
-          <span class="strip-item"><span class="strip-dot"></span>Modern Web Development</span>
           <span class="strip-item"><span class="strip-dot"></span>Linux Administration</span>
           <span class="strip-item"><span class="strip-dot"></span>Civil CAD &amp; Design</span>
-          <span class="strip-item"><span class="strip-
-            dot"></span>Digital Marketing &amp; SEO</span>
+          <span class="strip-item"><span class="strip-dot"></span>Digital Marketing &amp; SEO</span>
           <span class="strip-item"><span class="strip-dot"></span>IoT &amp; Embedded Systems</span>
           <span class="strip-item"><span class="strip-dot"></span>DBMS &amp; SQL Mastery</span>
+          <span class="strip-item"><span class="strip-dot"></span>Software Testing</span>
         </div>
       </div>
 
@@ -3851,6 +3841,9 @@
           </button>
         </form>
         <div class="login-links">
+          <div style="width:100%; margin-bottom:12px; text-align:center;">
+            <button type="button" class="login-link" style="color:#155EEF; font-weight:600; font-size:13px; background:rgba(21,94,239,0.06); padding:8px 16px; border-radius:6px; border:1px solid rgba(21,94,239,0.2); cursor:pointer;" onclick="document.getElementById('loginEmail').value='student@statsinnotech.com'; document.getElementById('loginPassword').value='student123';">⚡ Auto-fill Demo Login</button>
+          </div>
           <button class="login-link" onclick="openRegisterModal()">
 
             Create Account
@@ -4242,35 +4235,282 @@
       let currentUser = null;
 
 
+            // ============================================================
+      // SERVER CALL (Supports Google Apps Script & Static Hosting)
       // ============================================================
-      // SERVER CALL
-      // ============================================================
-
-      function callServer(
-        functionName,
-        ...args
-      ) {
-
-        return new Promise(
-          function (resolve, reject) {
-
+      function callServer(functionName, ...args) {
+        return new Promise(function (resolve, reject) {
+          if (window.google && window.google.script && window.google.script.run && typeof google.script.run[functionName] === 'function') {
             google.script.run
-
-              .withSuccessHandler(
-                resolve
-              )
-
-              .withFailureHandler(
-                reject
-              )[functionName](...args);
-
+              .withSuccessHandler(resolve)
+              .withFailureHandler(reject)[functionName](...args);
+          } else {
+            try {
+              const res = handleStaticCall(functionName, args);
+              setTimeout(function() { resolve(res); }, 150);
+            } catch (err) {
+              setTimeout(function() { reject(err); }, 150);
+            }
           }
-        );
+        });
+      }
 
+      function handleStaticCall(functionName, args) {
+        function getStorage(key, defaultVal) {
+          try {
+            var data = localStorage.getItem(key);
+            return data ? JSON.parse(data) : defaultVal;
+          } catch(e) { return defaultVal; }
+        }
+        function setStorage(key, val) {
+          try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+        }
+
+        var defaultStudents = [
+          {
+            id: 'STU_1001',
+            name: 'Sujal Kumar',
+            email: 'student@statsinnotech.com',
+            password: 'student123',
+            course: 'Java Full Stack',
+            batch: 'Batch-2026',
+            role: 'Student',
+            status: 'Active',
+            createdAt: new Date().toISOString()
+          },
+          {
+            id: 'STU_1002',
+            name: 'Demo Student',
+            email: 'student@gmail.com',
+            password: 'student123',
+            course: 'Python Development',
+            batch: 'Batch-2026',
+            role: 'Student',
+            status: 'Active',
+            createdAt: new Date().toISOString()
+          }
+        ];
+
+        var defaultTasks = [
+          { id: 'TSK_101', title: 'Build REST API Endpoints', description: 'Create CRUD endpoints for student management using Spring Boot.', date: '2026-03-01', course: 'Java Full Stack', batch: 'Batch-2026', deadline: '2026-04-15', status: 'Pending' },
+          { id: 'TSK_102', title: 'Database Schema Design', description: 'Design relational ER diagram and write DDL script for e-commerce portal.', date: '2026-03-05', course: 'Java Full Stack', batch: 'Batch-2026', deadline: '2026-04-20', status: 'Completed' },
+          { id: 'TSK_103', title: 'Data Exploratory Analysis', description: 'Perform EDA on customer churn dataset using Pandas and Seaborn.', date: '2026-03-10', course: 'Python Development', batch: 'Batch-2026', deadline: '2026-04-25', status: 'Pending' }
+        ];
+
+        var defaultAnnouncements = [
+          { id: 'ANN_001', title: 'Welcome to Stats Innotech 2026 Batch!', message: 'Your orientation session starts this Monday at 10 AM. Check your portal tasks.', date: '2026-03-01', createdBy: 'Admin' },
+          { id: 'ANN_002', title: 'Project Submission Guidelines', message: 'Ensure all GitHub repository links are public before submitting task deliverables.', date: '2026-03-10', createdBy: 'Admin' }
+        ];
+
+        var students = getStorage('sit_students', defaultStudents);
+        var tasks = getStorage('sit_tasks', defaultTasks);
+        var submissions = getStorage('sit_submissions', []);
+        var announcements = getStorage('sit_announcements', defaultAnnouncements);
+        var attendance = getStorage('sit_attendance', [
+          { id: 'ATT_1', studentEmail: 'student@statsinnotech.com', date: '2026-03-14', status: 'Present' },
+          { id: 'ATT_2', studentEmail: 'student@statsinnotech.com', date: '2026-03-15', status: 'Present' }
+        ]);
+        var activities = getStorage('sit_activities', []);
+
+        switch (functionName) {
+          case 'login': {
+            var email = String(args[0] || '').trim().toLowerCase();
+            var password = String(args[1] || '').trim();
+
+            if (!email || !password) throw new Error('Please enter both email and password.');
+            
+            var student = students.find(function(s) { return s.email.toLowerCase() === email; });
+            if (!student) {
+              throw new Error('No student account found with this email. Please check your email or click Create Account.');
+            }
+            if (student.password !== password) {
+              throw new Error('Invalid password. Please check your credentials.');
+            }
+            if (String(student.status).toLowerCase() !== 'active') {
+              throw new Error('This student account is inactive. Please contact support.');
+            }
+
+            var token = 'SES_' + Math.random().toString(36).substr(2, 9);
+            var session = {
+              token: token,
+              email: student.email,
+              name: student.name,
+              course: student.course || 'Java Full Stack',
+              batch: student.batch || 'Batch-2026',
+              role: 'Student',
+              loginAt: new Date().toISOString()
+            };
+            
+            var sessions = getStorage('sit_sessions', {});
+            sessions[token] = session;
+            setStorage('sit_sessions', sessions);
+            return session;
+          }
+
+          case 'registerStudent': {
+            var name = String(args[0] || '').trim();
+            var email = String(args[1] || '').trim().toLowerCase();
+            var password = String(args[2] || '').trim();
+            var course = String(args[3] || '').trim() || 'Java Full Stack';
+
+            if (!name || !email || !password) throw new Error('Name, email and password are required.');
+            if (password.length < 6) throw new Error('Password must be at least 6 characters.');
+            
+            if (students.some(function(s) { return s.email.toLowerCase() === email; })) {
+              throw new Error('An account with this email already exists. Please log in instead.');
+            }
+
+            var newStudent = {
+              id: 'STU_' + Math.floor(1000 + Math.random() * 9000),
+              name: name,
+              email: email,
+              password: password,
+              course: course,
+              batch: 'Batch-2026',
+              role: 'Student',
+              status: 'Active',
+              createdAt: new Date().toISOString()
+            };
+
+            students.push(newStudent);
+            setStorage('sit_students', students);
+            return { ok: true, message: 'Account created successfully! You can now log in.' };
+          }
+
+          case 'forgotPassword': {
+            var email = String(args[0] || '').trim().toLowerCase();
+            var student = students.find(function(s) { return s.email.toLowerCase() === email; });
+            if (!student) throw new Error('No student account was found for this email address.');
+
+            student.password = 'Temp123456';
+            setStorage('sit_students', students);
+            return { ok: true, message: 'Your password has been reset to: Temp123456. Please log in using this temporary password.' };
+          }
+
+          case 'logout': {
+            var token = args[0];
+            if (token) {
+              var sessions = getStorage('sit_sessions', {});
+              delete sessions[token];
+              setStorage('sit_sessions', sessions);
+            }
+            return { ok: true };
+          }
+
+          case 'getSession': {
+            var token = args[0];
+            if (!token) return null;
+            var sessions = getStorage('sit_sessions', {});
+            return sessions[token] || null;
+          }
+
+          case 'getDashboard': {
+            var token = args[0];
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            var userEmail = s ? s.email.toLowerCase() : '';
+            
+            var myTasks = tasks.filter(function(t) { return !t.course || t.course === (s ? s.course : ''); });
+            var mySubmissions = submissions.filter(function(sub) { return sub.studentEmail && sub.studentEmail.toLowerCase() === userEmail; });
+            var myAttendance = attendance.filter(function(a) { return a.studentEmail && a.studentEmail.toLowerCase() === userEmail; });
+            
+            return {
+              student: s,
+              tasks: myTasks,
+              submissions: mySubmissions,
+              announcements: announcements,
+              attendance: myAttendance
+            };
+          }
+
+          case 'getStudentTasks': {
+            var token = args[0];
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            return tasks.filter(function(t) { return !t.course || t.course === (s ? s.course : ''); });
+          }
+
+          case 'submitTask': {
+            var token = args[0];
+            var taskId = args[1];
+            var link = args[2];
+            var comments = args[3];
+
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            var userEmail = s ? s.email : 'student@statsinnotech.com';
+            var targetTask = tasks.find(function(t) { return t.id === taskId; }) || { title: 'Task Submission' };
+
+            var sub = {
+              id: 'SUB_' + Math.floor(1000 + Math.random() * 9000),
+              taskId: taskId,
+              taskTitle: targetTask.title,
+              studentEmail: userEmail,
+              link: link,
+              comments: comments,
+              status: 'Pending',
+              feedback: '',
+              submittedAt: new Date().toISOString()
+            };
+
+            submissions.push(sub);
+            setStorage('sit_submissions', submissions);
+            return { ok: true, message: 'Task submitted successfully!' };
+          }
+
+          case 'getStudentSubmissions': {
+            var token = args[0];
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            var userEmail = s ? s.email.toLowerCase() : '';
+            return submissions.filter(function(sub) { return sub.studentEmail && sub.studentEmail.toLowerCase() === userEmail; });
+          }
+
+          case 'getStudentAttendance': {
+            var token = args[0];
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            var userEmail = s ? s.email.toLowerCase() : '';
+            return attendance.filter(function(a) { return a.studentEmail && a.studentEmail.toLowerCase() === userEmail; });
+          }
+
+          case 'getStudentAnnouncements': {
+            return announcements;
+          }
+
+          case 'getStudentActivity': {
+            var token = args[0];
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            var userEmail = s ? s.email.toLowerCase() : '';
+            return activities.filter(function(a) { return a.studentEmail && a.studentEmail.toLowerCase() === userEmail; });
+          }
+
+          case 'changePassword': {
+            var token = args[0];
+            var oldPw = args[1];
+            var newPw = args[2];
+
+            var sessions = getStorage('sit_sessions', {});
+            var s = sessions[token] || (typeof currentUser !== 'undefined' ? currentUser : null);
+            if (!s) throw new Error('Session expired. Please log in again.');
+
+            var student = students.find(function(st) { return st.email.toLowerCase() === s.email.toLowerCase(); });
+            if (!student) throw new Error('Student record not found.');
+            if (student.password !== oldPw) throw new Error('Current password is incorrect.');
+
+            student.password = newPw;
+            setStorage('sit_students', students);
+            return { ok: true, message: 'Password updated successfully.' };
+          }
+
+          default:
+            return { ok: true };
+        }
       }
 
 
-      // ============================================================
+// ============================================================
       // LOGIN
       // ============================================================
 
@@ -6521,2254 +6761,6 @@
   </script>
   <script src="main.js"></script>
 
-  <script>
-
-
-
-    let sessionToken = null;
-
-    let currentUser = null;
-
-
-    // ============================================================
-    // SERVER CALL
-    // ============================================================
-
-    function callServer(
-      functionName,
-      ...args
-    ) {
-
-      return new Promise(
-        function (resolve, reject) {
-
-          google.script.run
-
-            .withSuccessHandler(
-              resolve
-            )
-
-            .withFailureHandler(
-              reject
-            )[functionName](...args);
-
-        }
-      );
-
-    }
-
-
-    // ============================================================
-    // LOGIN
-    // ============================================================
-
-    document
-      .getElementById("loginForm")
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          const email =
-            document
-              .getElementById(
-                "loginEmail"
-              )
-              .value;
-
-
-          const password =
-            document
-              .getElementById(
-                "loginPassword"
-              )
-              .value;
-
-
-          const errorBox =
-            document.getElementById(
-              "loginError"
-            );
-
-
-          try {
-
-            errorBox.classList.add(
-              "hidden"
-            );
-
-
-            const result =
-              await callServer(
-                "login",
-                email,
-                password
-              );
-
-
-            sessionToken =
-              result.token;
-
-
-            currentUser =
-              result;
-
-
-            showApp();
-
-          }
-          catch (error) {
-
-            errorBox.textContent =
-              error.message ||
-              "Login failed.";
-
-
-            errorBox.classList.remove(
-              "hidden"
-            );
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // SHOW APP
-    // ============================================================
-
-    function showApp() {
-
-      document
-        .getElementById(
-          "loginPage"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-
-      document
-        .getElementById(
-          "app"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-
-      document
-        .getElementById(
-          "userName"
-        )
-        .textContent =
-        currentUser.name;
-
-
-      /* Student Login only: Admin UI is intentionally unavailable on this page. */
-      const adminMenu = document.getElementById("adminMenu");
-      if (adminMenu) adminMenu.remove();
-
-
-      loadDashboard();
-
-    }
-
-
-    // ============================================================
-    // LOGOUT
-    // ============================================================
-
-    async function logoutUser() {
-
-      try {
-
-        await callServer(
-          "logout",
-          sessionToken
-        );
-
-      }
-      catch (e) { }
-
-
-      sessionToken = null;
-
-      currentUser = null;
-
-      showPublicSite();
-
-    }
-
-
-    // ============================================================
-    // PAGE NAVIGATION
-    // ============================================================
-
-    function showPage(
-      page,
-      button
-    ) {
-
-      document
-        .querySelectorAll(".page")
-        .forEach(
-          function (el) {
-
-            el.classList.add(
-              "hidden"
-            );
-
-          }
-        );
-
-
-      const target =
-        document.getElementById(
-          "page-" + page
-        );
-
-
-      if (target) {
-
-        target.classList.remove(
-          "hidden"
-        );
-
-      }
-
-
-      document
-        .querySelectorAll(
-          ".menu-btn"
-        )
-        .forEach(
-          function (el) {
-
-            el.classList.remove(
-              "active"
-            );
-
-          }
-        );
-
-
-      if (button) {
-
-        button.classList.add(
-          "active"
-        );
-
-      }
-
-
-      const headings = {
-
-        dashboard:
-          "Dashboard",
-
-        tasks:
-          "My Tasks",
-
-        submissions:
-          "My Submissions",
-
-        attendance:
-          "Attendance",
-
-        announcements:
-          "Announcements",
-
-        courses:
-          "Courses & Internships",
-
-        students:
-          "Students",
-
-        assignTask:
-          "Assign Task",
-
-        adminAttendance:
-          "Manage Attendance",
-
-        adminAnnouncements:
-          "Create Announcement",
-
-        adminSubmissions:
-          "Review Submissions",
-
-        activity:
-          "Student Activity"
-
-      };
-
-
-      document
-        .getElementById(
-          "pageHeading"
-        )
-        .textContent =
-        headings[page] ||
-        "Dashboard";
-
-
-      document
-        .getElementById(
-          "sidebar"
-        )
-        .classList.remove(
-          "open"
-        );
-
-
-      if (page === "dashboard")
-        loadDashboard();
-
-      if (page === "tasks")
-        loadTasks();
-
-      if (page === "submissions")
-        loadSubmissions();
-
-      if (page === "attendance")
-        loadAttendance();
-
-      if (page === "announcements")
-        loadAnnouncements();
-
-      if (page === "courses")
-        loadCourses();
-
-      if (page === "students")
-        loadStudents();
-
-      if (page === "adminAttendance")
-        loadAdminAttendance();
-
-      if (page === "adminSubmissions")
-        loadAdminSubmissions();
-
-      if (page === "activity")
-        loadActivity();
-
-    }
-
-
-    // ============================================================
-    // SIDEBAR
-    // ============================================================
-
-    function toggleSidebar() {
-
-      document
-        .getElementById(
-          "sidebar"
-        )
-        .classList.toggle(
-          "open"
-        );
-
-    }
-
-
-    // ============================================================
-    // DASHBOARD
-    // ============================================================
-
-    async function loadDashboard() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getDashboard",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "dashboardCards"
-          )
-          .innerHTML = `
-
-        <div class="card">
-
-          <div class="card-title">
-            Total Tasks
-          </div>
-
-          <div class="card-value">
-            ${data.stats.totalTasks}
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Completed
-          </div>
-
-          <div class="card-value">
-            ${data.stats.completedTasks}
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Pending
-          </div>
-
-          <div class="card-value">
-            ${data.stats.pendingTasks}
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Attendance
-          </div>
-
-          <div class="card-value">
-            ${data.stats.attendance}%
-          </div>
-
-        </div>
-
-      `;
-
-
-        document
-          .getElementById(
-            "dashboardTasks"
-          )
-          .innerHTML =
-
-          data.recentTasks.length
-
-            ?
-
-            data.recentTasks
-              .map(function (task) {
-
-                return `
-
-            <div
-              class="card"
-              style="margin-bottom:10px;">
-
-              <strong>
-                ${escapeHtml(
-                  task.Title
-                )}
-              </strong>
-
-              <br>
-
-              <small>
-                ${escapeHtml(
-                  task.Date || ""
-                )}
-              </small>
-
-              <br>
-
-              <span
-                class="badge ${task.Status ===
-                    "Completed"
-                    ? "badge-success"
-                    : "badge-warning"
-                  }">
-
-                ${escapeHtml(
-                    task.Status
-                  )}
-
-              </span>
-
-            </div>
-
-          `;
-
-              })
-              .join("")
-
-            :
-
-            "<p>No tasks available.</p>";
-
-
-        document
-          .getElementById(
-            "dashboardAnnouncements"
-          )
-          .innerHTML =
-
-          data.announcements.length
-
-            ?
-
-            data.announcements
-              .slice(0, 5)
-              .map(function (item) {
-
-                return `
-
-            <div
-              class="announcement">
-
-              <strong>
-                ${escapeHtml(
-                  item.Title
-                )}
-              </strong>
-
-              <p>
-                ${escapeHtml(
-                  item.Message
-                )}
-              </p>
-
-              <small>
-                ${escapeHtml(
-                  item.Date || ""
-                )}
-              </small>
-
-            </div>
-
-          `;
-
-              })
-              .join("")
-
-            :
-
-            "<p>No announcements.</p>";
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // TASKS
-    // ============================================================
-
-    async function loadTasks() {
-
-      try {
-
-        const tasks =
-          await callServer(
-            "getStudentTasks",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "tasksTable"
-          )
-          .innerHTML =
-
-          tasks.length
-
-            ?
-
-            tasks.map(function (task) {
-
-              return `
-
-          <tr>
-
-            <td>
-
-              <strong>
-                ${escapeHtml(
-                task.Title
-              )}
-              </strong>
-
-              <br>
-
-              <small>
-                ${escapeHtml(
-                task.Description || ""
-              )}
-              </small>
-
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                task.Date || ""
-              )}
-            </td>
-
-
-            <td>
-              ${escapeHtml(
-                task.Deadline || ""
-              )}
-            </td>
-
-
-            <td>
-
-              <span
-                class="badge ${task.Status ===
-                  "Completed"
-                  ? "badge-success"
-                  : "badge-warning"
-                }">
-
-                ${escapeHtml(
-                  task.Status
-                )}
-
-              </span>
-
-            </td>
-
-
-            <td>
-
-              ${task.Status !==
-                  "Completed"
-
-                  ?
-
-                  `
-
-                  <button
-                    class="btn btn-success"
-                    onclick="completeTask('${task.ID}')">
-
-                    Complete
-
-                  </button>
-
-
-                  <button
-                    class="btn btn-primary"
-                    onclick="openSubmissionModal('${task.ID}')">
-
-                    Submit
-
-                  </button>
-
-                `
-
-                  :
-
-                  "Completed"
-
-                }
-
-            </td>
-
-          </tr>
-
-        `;
-
-            }).join("")
-
-            :
-
-            `
-
-        <tr>
-
-          <td colspan="5">
-            No tasks available.
-          </td>
-
-        </tr>
-
-      `;
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    async function completeTask(
-      taskId
-    ) {
-
-      try {
-
-        await callServer(
-          "completeTask",
-          sessionToken,
-          taskId
-        );
-
-
-        alert(
-          "Task completed successfully."
-        );
-
-
-        loadTasks();
-
-        loadDashboard();
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // SUBMISSIONS
-    // ============================================================
-
-    async function loadSubmissions() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getMySubmissions",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "submissionsTable"
-          )
-          .innerHTML =
-
-          data.length
-
-            ?
-
-            data.map(function (item) {
-
-              return `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-                item.TaskTitle
-              )}
-            </td>
-
-            <td>
-
-              <a
-                href="${escapeHtml(
-                item.Link
-              )}"
-                target="_blank">
-
-                Open
-
-              </a>
-
-            </td>
-
-            <td>
-              ${escapeHtml(
-                item.Status
-              )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-                item.Feedback || "-"
-              )}
-            </td>
-
-          </tr>
-
-        `;
-
-            }).join("")
-
-            :
-
-            `
-
-        <tr>
-
-          <td colspan="4">
-            No submissions yet.
-          </td>
-
-        </tr>
-
-      `;
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    function openSubmissionModal(
-      taskId
-    ) {
-
-      document
-        .getElementById(
-          "submissionTaskId"
-        )
-        .value =
-        taskId;
-
-
-      document
-        .getElementById(
-          "submissionModal"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-
-    function closeSubmissionModal() {
-
-      document
-        .getElementById(
-          "submissionModal"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-    }
-
-
-    document
-      .getElementById(
-        "submissionForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          try {
-
-            await callServer(
-
-              "submitAssignment",
-
-              sessionToken,
-
-              document
-                .getElementById(
-                  "submissionTaskId"
-                )
-                .value,
-
-              document
-                .getElementById(
-                  "submissionLink"
-                )
-                .value,
-
-              document
-                .getElementById(
-                  "submissionComments"
-                )
-                .value
-
-            );
-
-
-            alert(
-              "Assignment submitted."
-            );
-
-
-            closeSubmissionModal();
-
-            this.reset();
-
-            loadSubmissions();
-
-          }
-          catch (error) {
-
-            handleError(error);
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // ATTENDANCE
-    // ============================================================
-
-    async function loadAttendance() {
-
-      try {
-
-        const records =
-          await callServer(
-            "getAttendanceForStudent",
-            sessionToken
-          );
-
-
-        const present =
-          records.filter(
-            function (row) {
-
-              return (
-                String(row.Status)
-                  .toLowerCase() ===
-                "present"
-              );
-
-            }
-          ).length;
-
-
-        const percentage =
-          records.length
-
-            ?
-
-            Math.round(
-              present /
-              records.length *
-              100
-            )
-
-            :
-
-            0;
-
-
-        document
-          .getElementById(
-            "attendanceCards"
-          )
-          .innerHTML = `
-
-        <div class="card">
-
-          <div class="card-title">
-            Attendance
-          </div>
-
-          <div class="card-value">
-            ${percentage}%
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Present
-          </div>
-
-          <div class="card-value">
-            ${present}
-          </div>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-title">
-            Total Records
-          </div>
-
-          <div class="card-value">
-            ${records.length}
-          </div>
-
-        </div>
-
-      `;
-
-
-        document
-          .getElementById(
-            "attendanceTable"
-          )
-          .innerHTML =
-
-          records.length
-
-            ?
-
-            records.map(function (row) {
-
-              return `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-                row.Date
-              )}
-            </td>
-
-            <td>
-
-              <span
-                class="badge ${String(row.Status)
-                  .toLowerCase() ===
-                  "present"
-                  ? "badge-success"
-                  : "badge-danger"
-                }">
-
-                ${escapeHtml(
-                  row.Status
-                )}
-
-              </span>
-
-            </td>
-
-          </tr>
-
-        `;
-
-            }).join("")
-
-            :
-
-            `
-
-        <tr>
-
-          <td colspan="2">
-            No attendance records.
-          </td>
-
-        </tr>
-
-      `;
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // ANNOUNCEMENTS
-    // ============================================================
-
-    async function loadAnnouncements() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getAnnouncements",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "announcementsList"
-          )
-          .innerHTML =
-
-          data.length
-
-            ?
-
-            data.map(function (item) {
-
-              return `
-
-          <div
-            class="card"
-            style="margin-bottom:15px;">
-
-            <h3>
-              ${escapeHtml(
-                item.Title
-              )}
-            </h3>
-
-            <p>
-              ${escapeHtml(
-                item.Message
-              )}
-            </p>
-
-            <small>
-              ${escapeHtml(
-                item.Date || ""
-              )}
-            </small>
-
-          </div>
-
-        `;
-
-            }).join("")
-
-            :
-
-            "<p>No announcements.</p>";
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // COURSES
-    // ============================================================
-
-    async function loadCourses() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getCourses",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "coursesList"
-          )
-          .innerHTML =
-
-          data.length
-
-            ?
-
-            data.map(function (course) {
-
-              return `
-
-          <div class="card">
-
-            <h3>
-              ${escapeHtml(
-                course.Name
-              )}
-            </h3>
-
-            <p>
-              ${escapeHtml(
-                course.Description || ""
-              )}
-            </p>
-
-            <strong>
-              Duration:
-            </strong>
-
-            ${escapeHtml(
-                course.Duration || ""
-              )}
-
-          </div>
-
-        `;
-
-            }).join("")
-
-            :
-
-            "<p>No courses available.</p>";
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // ADMIN STUDENTS
-    // ============================================================
-
-    async function loadStudents() {
-
-      try {
-
-        const students =
-          await callServer(
-            "getAdminStudents",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "studentsTable"
-          )
-          .innerHTML =
-
-          students
-            .filter(function (student) {
-
-              return (
-                student.Role !==
-                "Admin"
-              );
-
-            })
-            .map(function (student) {
-
-              const isActive =
-                student.Status ===
-                "Active";
-
-
-              return `
-
-            <tr>
-
-              <td>
-                ${escapeHtml(
-                student.Name
-              )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                student.Email
-              )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                student.Course
-              )}
-              </td>
-
-              <td>
-                ${escapeHtml(
-                student.Batch
-              )}
-              </td>
-
-              <td>
-
-                <span
-                  class="badge ${student.Status ===
-                  "Active"
-
-                  ? "badge-success"
-
-                  : student.Status ===
-                    "Pending"
-
-                    ? "badge-warning"
-
-                    : "badge-danger"
-                }">
-
-                  ${escapeHtml(
-                  student.Status
-                )}
-
-                </span>
-
-              </td>
-
-
-              <td>
-
-                ${isActive
-
-                  ?
-
-                  `
-
-                    <button
-                      class="btn btn-danger"
-                      onclick="changeStudentStatus(
-                        '${escapeHtml(student.Email)}',
-                        'Inactive'
-                      )">
-
-                      Deactivate
-
-                    </button>
-
-                  `
-
-                  :
-
-                  `
-
-                    <button
-                      class="btn btn-success"
-                      onclick="changeStudentStatus(
-                        '${escapeHtml(student.Email)}',
-                        'Active'
-                      )">
-
-                      Activate
-
-                    </button>
-
-                  `
-
-                }
-
-              </td>
-
-            </tr>
-
-          `;
-
-            }).join("");
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    async function changeStudentStatus(
-      email,
-      status
-    ) {
-
-      try {
-
-        await callServer(
-
-          "updateStudentStatus",
-
-          sessionToken,
-
-          email,
-
-          status
-
-        );
-
-
-        alert(
-          "Student status updated."
-        );
-
-
-        loadStudents();
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    function openStudentModal() {
-
-      document
-        .getElementById(
-          "studentModal"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-
-    function closeStudentModal() {
-
-      document
-        .getElementById(
-          "studentModal"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-    }
-
-
-    document
-      .getElementById(
-        "studentForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          try {
-
-            await callServer(
-
-              "createUser",
-
-              sessionToken,
-
-              {
-
-                name:
-                  document
-                    .getElementById(
-                      "studentName"
-                    ).value,
-
-                email:
-                  document
-                    .getElementById(
-                      "studentEmail"
-                    ).value,
-
-                password:
-                  document
-                    .getElementById(
-                      "studentPassword"
-                    ).value,
-
-                course:
-                  document
-                    .getElementById(
-                      "studentCourse"
-                    ).value,
-
-                batch:
-                  document
-                    .getElementById(
-                      "studentBatch"
-                    ).value,
-
-                role:
-                  "Student",
-
-                status:
-                  "Active"
-
-              }
-
-            );
-
-
-            alert(
-              "Student created successfully."
-            );
-
-
-            closeStudentModal();
-
-            this.reset();
-
-            loadStudents();
-
-          }
-          catch (error) {
-
-            handleError(error);
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // ASSIGN TASK
-    // ============================================================
-
-    document
-      .getElementById(
-        "taskForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          try {
-
-            await callServer(
-
-              "assignTask",
-
-              sessionToken,
-
-              {
-
-                title:
-                  document
-                    .getElementById(
-                      "taskTitle"
-                    ).value,
-
-                description:
-                  document
-                    .getElementById(
-                      "taskDescription"
-                    ).value,
-
-                date:
-                  document
-                    .getElementById(
-                      "taskDate"
-                    ).value,
-
-                course:
-                  document
-                    .getElementById(
-                      "taskCourse"
-                    ).value,
-
-                batch:
-                  document
-                    .getElementById(
-                      "taskBatch"
-                    ).value,
-
-                studentEmail:
-                  document
-                    .getElementById(
-                      "taskStudentEmail"
-                    ).value,
-
-                deadline:
-                  document
-                    .getElementById(
-                      "taskDeadline"
-                    ).value
-
-              }
-
-            );
-
-
-            alert(
-              "Task assigned successfully."
-            );
-
-
-            this.reset();
-
-          }
-          catch (error) {
-
-            handleError(error);
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // ADMIN ATTENDANCE
-    // ============================================================
-
-    async function saveAttendance() {
-
-      try {
-
-        await callServer(
-
-          "markAttendance",
-
-          sessionToken,
-
-          document
-            .getElementById(
-              "attendanceEmail"
-            ).value,
-
-          document
-            .getElementById(
-              "attendanceDate"
-            ).value,
-
-          document
-            .getElementById(
-              "attendanceStatus"
-            ).value
-
-        );
-
-
-        alert(
-          "Attendance saved."
-        );
-
-
-        loadAdminAttendance();
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    async function loadAdminAttendance() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getAttendanceForStudent",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "adminAttendanceTable"
-          )
-          .innerHTML =
-
-          data.map(function (row) {
-
-            return `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-              row.StudentEmail
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              row.Date
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              row.Status
-            )}
-            </td>
-
-          </tr>
-
-        `;
-
-          }).join("");
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // ADMIN ANNOUNCEMENT
-    // ============================================================
-
-    document
-      .getElementById(
-        "announcementForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          try {
-
-            await callServer(
-
-              "createAnnouncement",
-
-              sessionToken,
-
-              document
-                .getElementById(
-                  "announcementTitle"
-                ).value,
-
-              document
-                .getElementById(
-                  "announcementMessage"
-                ).value
-
-            );
-
-
-            alert(
-              "Announcement published."
-            );
-
-
-            this.reset();
-
-          }
-          catch (error) {
-
-            handleError(error);
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // ADMIN SUBMISSIONS
-    // ============================================================
-
-    async function loadAdminSubmissions() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getAllSubmissions",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "adminSubmissionsTable"
-          )
-          .innerHTML =
-
-          data.map(function (item) {
-
-            return `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-              item.StudentEmail
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              item.TaskTitle
-            )}
-            </td>
-
-            <td>
-
-              <a
-                href="${escapeHtml(
-              item.Link
-            )}"
-                target="_blank">
-
-                Open
-
-              </a>
-
-            </td>
-
-            <td>
-              ${escapeHtml(
-              item.Status
-            )}
-            </td>
-
-            <td>
-
-              <button
-                class="btn btn-success"
-                onclick="reviewSubmission(
-                  '${item.ID}',
-                  'Approved'
-                )">
-
-                Approve
-
-              </button>
-
-
-              <button
-                class="btn btn-danger"
-                onclick="reviewSubmission(
-                  '${item.ID}',
-                  'Rejected'
-                )">
-
-                Reject
-
-              </button>
-
-            </td>
-
-          </tr>
-
-        `;
-
-          }).join("");
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    async function reviewSubmission(
-      id,
-      status
-    ) {
-
-      let feedback = "";
-
-
-      if (
-        status ===
-        "Rejected"
-      ) {
-
-        feedback =
-          prompt(
-            "Enter feedback:"
-          ) || "";
-
-      }
-
-
-      try {
-
-        await callServer(
-
-          "reviewSubmission",
-
-          sessionToken,
-
-          id,
-
-          status,
-
-          feedback
-
-        );
-
-
-        alert(
-          "Submission reviewed."
-        );
-
-
-        loadAdminSubmissions();
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // ACTIVITY
-    // ============================================================
-
-    async function loadActivity() {
-
-      try {
-
-        const data =
-          await callServer(
-            "getAllActivity",
-            sessionToken
-          );
-
-
-        document
-          .getElementById(
-            "activityTable"
-          )
-          .innerHTML =
-
-          data.map(function (row) {
-
-            return `
-
-          <tr>
-
-            <td>
-              ${escapeHtml(
-              row.StudentEmail
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              row.Action
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              row.Details
-            )}
-            </td>
-
-            <td>
-              ${escapeHtml(
-              row.Timestamp
-            )}
-            </td>
-
-          </tr>
-
-        `;
-
-          }).join("");
-
-      }
-      catch (error) {
-
-        handleError(error);
-
-      }
-
-    }
-
-
-    // ============================================================
-    // CREATE ACCOUNT
-    // ============================================================
-
-    function openRegisterModal() {
-
-      document
-        .getElementById(
-          "registerModal"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-
-    function closeRegisterModal() {
-
-      document
-        .getElementById(
-          "registerModal"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-    }
-
-
-    document
-      .getElementById(
-        "registerForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          const password =
-            document
-              .getElementById(
-                "registerPassword"
-              ).value;
-
-
-          const confirmPassword =
-            document
-              .getElementById(
-                "registerConfirmPassword"
-              ).value;
-
-
-          if (
-            password !==
-            confirmPassword
-          ) {
-
-            alert(
-              "Passwords do not match."
-            );
-
-            return;
-
-          }
-
-
-          try {
-
-            const result =
-              await callServer(
-
-                "registerStudent",
-
-                document
-                  .getElementById("registerName").value,
-
-                document
-                  .getElementById("registerEmail").value,
-
-                password,
-
-                document
-                  .getElementById("registerCourse").value);
-
-
-            alert(
-              result.message
-            );
-
-
-            closeRegisterModal();
-
-            this.reset();
-
-          }
-          catch (error) {
-
-            alert(
-              error.message ||
-              "Unable to create account."
-            );
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // FORGOT PASSWORD
-    // ============================================================
-
-    function openForgotPasswordModal() {
-
-      document
-        .getElementById(
-          "forgotPasswordModal"
-        )
-        .classList.remove(
-          "hidden"
-        );
-
-    }
-
-
-    function closeForgotPasswordModal() {
-
-      document
-        .getElementById(
-          "forgotPasswordModal"
-        )
-        .classList.add(
-          "hidden"
-        );
-
-    }
-
-
-    document
-      .getElementById(
-        "forgotPasswordForm"
-      )
-      .addEventListener(
-        "submit",
-        async function (e) {
-
-          e.preventDefault();
-
-
-          const email =
-            document
-              .getElementById(
-                "forgotPasswordEmail"
-              ).value;
-
-
-          try {
-
-            const result =
-              await callServer(
-
-                "forgotPassword",
-
-                email
-
-              );
-
-
-            alert(
-              result.message
-            );
-
-
-            closeForgotPasswordModal();
-
-            this.reset();
-
-          }
-          catch (error) {
-
-            alert(
-              error.message ||
-              "Password reset failed."
-            );
-
-          }
-
-        }
-      );
-
-
-    // ============================================================
-    // ERROR
-    // ============================================================
-
-    function handleError(error) {
-
-      console.error(error);
-
-
-      alert(
-
-        error &&
-          error.message
-
-          ?
-
-          error.message
-
-          :
-
-          "Something went wrong."
-
-      );
-
-    }
-
-
-    // ============================================================
-    // HTML SECURITY
-    // ============================================================
-
-    function escapeHtml(value) {
-
-      return String(value || "")
-
-        .replace(
-          /&/g,
-          "&amp;"
-        )
-
-        .replace(
-          /</g,
-          "&lt;"
-        )
-
-        .replace(
-          />/g,
-          "&gt;"
-        )
-
-        .replace(
-          /"/g,
-          "&quot;"
-        )
-
-        .replace(
-          /'/g,
-          "&#039;"
-        );
-
-    }
-
-
-  </script>
-</body>
+  </body>
 
 </html>
