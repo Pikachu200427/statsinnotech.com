@@ -1,3 +1,102 @@
+
+/* -------------------------------------------------------------
+ * STUDENT AUTHENTICATION & INTENT CHECKER FOR ENROLLMENT
+ * ------------------------------------------------------------- */
+function getLoggedInStudent() {
+  try {
+    if (typeof window.currentUser !== 'undefined' && window.currentUser && window.currentUser.email) {
+      return window.currentUser;
+    }
+    var stored = localStorage.getItem('sit_current_student') || sessionStorage.getItem('sit_current_student');
+    if (stored) {
+      var parsed = JSON.parse(stored);
+      if (parsed && parsed.email) return parsed;
+    }
+    var sessions = localStorage.getItem('sit_sessions');
+    if (sessions) {
+      var sessObj = JSON.parse(sessions);
+      var keys = Object.keys(sessObj);
+      if (keys.length > 0) return sessObj[keys[keys.length - 1]];
+    }
+  } catch(e) {}
+  return null;
+}
+window.getLoggedInStudent = getLoggedInStudent;
+
+function requireStudentAuth(intentData, callback) {
+  var student = getLoggedInStudent();
+  if (student) {
+    if (typeof callback === 'function') {
+      callback(student);
+    }
+  } else {
+    if (intentData) {
+      sessionStorage.setItem('sit_pending_intent', JSON.stringify(intentData));
+    }
+    showToast('🔐 Student Login Required: Please log in to your Student Account before enrolling in courses or applying for internships.');
+    setTimeout(function() {
+      if (typeof window.showStudentPortal === 'function') {
+        window.showStudentPortal();
+      } else {
+        window.location.href = 'index.html#student';
+      }
+    }, 1200);
+  }
+}
+window.requireStudentAuth = requireStudentAuth;
+
+function checkAndFulfillPendingIntent() {
+  var student = getLoggedInStudent();
+  if (!student) return;
+
+  var pendingRaw = sessionStorage.getItem('sit_pending_intent');
+  if (!pendingRaw) return;
+
+  try {
+    var intent = JSON.parse(pendingRaw);
+    sessionStorage.removeItem('sit_pending_intent');
+
+    if (intent.type === 'enroll' && intent.course) {
+      setTimeout(function() {
+        prefillInquiryDirect(intent.course, student);
+      }, 400);
+    } else if (intent.type === 'internship' && intent.domain) {
+      setTimeout(function() {
+        openInternshipModalWithDomainDirect(intent.domain, student);
+      }, 400);
+    }
+  } catch(e) {}
+}
+window.checkAndFulfillPendingIntent = checkAndFulfillPendingIntent;
+
+function prefillInquiryDirect(courseTitle, student) {
+  var interestSelect = document.getElementById('contactInterest');
+  var messageInput = document.getElementById('contactMessage');
+  var nameInput = document.getElementById('contactName');
+  var emailInput = document.getElementById('contactEmail');
+
+  if (interestSelect) interestSelect.value = 'Courses';
+  if (messageInput) {
+    messageInput.value = 'I am logged in as ' + (student.name || 'Student') + ' (' + student.email + ') and wish to enroll in: ' + courseTitle + '. Please confirm my course registration.';
+  }
+  if (nameInput && student.name) nameInput.value = student.name;
+  if (emailInput && student.email) emailInput.value = student.email;
+
+  openModal('contactModal');
+}
+
+function openInternshipModalWithDomainDirect(domain, student) {
+  var domainSelect = document.getElementById('internDomain') || document.getElementById('appDomain');
+  var nameInput = document.getElementById('internName') || document.getElementById('appFullName');
+  var emailInput = document.getElementById('internEmail') || document.getElementById('appEmail');
+
+  if (domainSelect && domain) domainSelect.value = domain;
+  if (nameInput && student.name) nameInput.value = student.name;
+  if (emailInput && student.email) emailInput.value = student.email;
+
+  openModal('internshipModal');
+}
+
 /**
  * Stats Innotech - Master Interactive JavaScript
  * Handles navigation, course catalog modals, internship applications,
@@ -465,19 +564,9 @@ function showCourseDetails(courseKey) {
 window.showCourseDetails = showCourseDetails;
 
 function prefillInquiry(courseTitle) {
-  // If contactModal exists
-  const modal = document.getElementById('contactModal');
-  const interestSelect = document.getElementById('contactInterest');
-  const messageInput = document.getElementById('contactMessage');
-
-  if (interestSelect) {
-    interestSelect.value = 'Courses';
-  }
-  if (messageInput) {
-    messageInput.value = `I am interested in enrolling or receiving syllabus details for: ${courseTitle}. Please share batch schedule and fee details.`;
-  }
-
-  openModal('contactModal');
+  requireStudentAuth({ type: 'enroll', course: courseTitle }, function(student) {
+    prefillInquiryDirect(courseTitle, student);
+  });
 }
 window.prefillInquiry = prefillInquiry;
 
@@ -523,16 +612,14 @@ function initFormSubmissions() {
     });
   }
 
-  // Domain apply button clicks (opens internship application modal with domain pre-selected)
+  // Domain apply button clicks (requires student login before opening application)
   document.querySelectorAll('[data-apply-domain]').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
       e.preventDefault();
       const domain = btn.getAttribute('data-apply-domain');
-      const domainSelect = document.getElementById('internDomain');
-      if (domainSelect && domain) {
-        domainSelect.value = domain;
-      }
-      openModal('internshipModal');
+      requireStudentAuth({ type: 'internship', domain: domain }, function(student) {
+        openInternshipModalWithDomainDirect(domain, student);
+      });
     });
   });
 }
