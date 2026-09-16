@@ -289,13 +289,13 @@ function initNavigation() {
   const btnLogin = document.getElementById('btnLogin');
   if (btnLogin) {
     btnLogin.addEventListener('click', function(e) {
-      // If we are already on Index.html and showStudentPortal exists
+      // If we are already on index.html and showStudentPortal exists
       if (typeof window.showStudentPortal === 'function') {
         e.preventDefault();
         window.showStudentPortal();
       } else {
-        // Navigate to Index.html with login query/hash
-        window.location.href = 'Index.html#student';
+        // Navigate to index.html with login query/hash
+        window.location.href = 'index.html#student';
       }
     });
   }
